@@ -1,5 +1,7 @@
 <?php
+    // include 'include/autoloader.inc.php';
     require_once("./htmlgenerator.php");
+    include "php/classes/customer.class.php";
 ?>
 
 <!DOCTYPE html>
@@ -13,6 +15,10 @@
     </head>
     <body class="body">
         <?= require_once("./layouts/header.php"); ?>
+        <?php
+            $customers = new Customer();
+            print_r($customers->getCustomers());
+        ?>
 
         <main class="main">
             <section class="content">
