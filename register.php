@@ -73,7 +73,9 @@
         <section class="form__container">
             <h1 class="form__title">Sign up</h1>
 
-            <form action="#" class="form">
+            <form action="php/includes/signup.inc.php" method="post" class="form">
+                <label class="form__label" for="username">Username</label>
+                <input class="form__input" type="text" name="username" id="username" required>
                 <label class="form__label" for="fname">Firstname</label>
                 <input class="form__input" type="text" name="fname" id="fname" required>
                 <label class="form__label" for="lname">Lastname</label>
