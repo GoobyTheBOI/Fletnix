@@ -12,10 +12,10 @@
         <title>FLETNIX</title>
     </head>
     <body class="body">
-        <?= require_once("./layouts/header.php"); ?>
+        <?php require_once("./layouts/header.php"); ?>
         <main class="main">
             <section class="content">
-                <?= tekenThumbnails(); ?>
+                <?= drawThumbnails(); ?>
             </section>
 
             <section class="row">
@@ -29,7 +29,7 @@
                     </a>
                 </div>
                 <div class="row__grid">
-                    <?= tekenCards(5); ?>
+                    <?= drawCards(5); ?>
                 </div>
             </section>
 
@@ -43,10 +43,10 @@
                     </a>
                 </div>
                 <div class="row__grid">
-                    <?= tekenCards(5); ?>
+                    <?= drawCards(5); ?>
                 </div>
             </section>
         </main>
-        <?= require_once("./layouts/footer.php"); ?>
+        <?php require_once("./layouts/footer.php"); ?>
     </body>
 </html>

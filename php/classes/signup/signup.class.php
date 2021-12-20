@@ -16,7 +16,7 @@ class SignUp extends Dbh {
     }
 
     protected function checkUser($username, $email) {
-        $connection = $this->connect()->prepare("SELECT user_id FROM Users WHERE username = :username OR email = :email;");
+        $connection = $this->connect()->prepare("SELECT COUNT(*) FROM Users WHERE username = :username OR email = :email;");
 
         if (!$connection->execute([$username, $email])) {
             $connection = null;
@@ -25,7 +25,7 @@ class SignUp extends Dbh {
         }
 
         $connectionResult;
-        if ($connection->rowCount() > 0) {
+        if ($connection->fetchColumn() > 0) {
             $connectionResult = false;
         }else{
             $connectionResult = true;

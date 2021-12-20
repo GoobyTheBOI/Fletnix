@@ -1,5 +1,5 @@
 <?php
-    function tekenCards($aantal){
+    function drawCards($aantal){
         // <a href="./the-assasin.html">
         //     <article class="card">
         //         <img class="card__image card__image" src="./images/cover.jpg" alt="cover">
@@ -26,11 +26,11 @@
         //     </article>
         // </a>
         for ($i=0; $i < $aantal; $i++) {
-            echo tekenCard();
+            echo drawCard();
         }
     }
 
-    function tekenCard(){
+    function drawCard(){
         return <<<HTML
             <a href="./the-assasin.html">
                 <article class="card">
@@ -60,15 +60,15 @@
         HTML;
     }
 
-    function tekenThumbnails(){
-        $thumbnail = tekenThumbnail("head-image");
-        $thumbnail .= tekenThumbnail("sub-image", "margin-bottom-auto");
-        $thumbnail .= tekenThumbnail("sub-image", "margin-top-auto");
+    function drawThumbnails(){
+        $thumbnail = drawThumbnail("head-image");
+        $thumbnail .= drawThumbnail("sub-image", "margin-bottom-auto");
+        $thumbnail .= drawThumbnail("sub-image", "margin-top-auto");
 
         return $thumbnail;
     }
 
-    function tekenThumbnail($css_class, $margin_auto = NULL){
+    function drawThumbnail($css_class, $margin_auto = NULL){
         return <<<HTML
             <div class="thumbnail thumbnail--{$css_class} thumbnail--{$margin_auto}">
                 <img class="content__image content__image--{$css_class}"
@@ -85,6 +85,22 @@
                 </div>
             </div>
         HTML;
+    }
+
+    function drawError() {
+
+        $error;
+
+        if('userexist'):
+            $error = 'User already exist';
+        elseif('emptyinput'):
+            $error = "Field can't be empty";
+        elseif('email'):
+            $error = "Wrong type of email";
+        elseif('passwordmatch'):
+            $error = "Passwords are not the same";
+        endif;
+        return $error;
     }
 
 

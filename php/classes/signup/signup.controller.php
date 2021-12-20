@@ -1,6 +1,6 @@
 <?php
 
-class signUpController {
+class signUpController extends SignUp {
 
     private $username;
     private $firstname;
@@ -17,7 +17,7 @@ class signUpController {
     public function __construct($username, $firstname, $lastname, $email, $birth_date, $country, $subscription, $accountnmbr, $password, $password_repeat, $gender) {
         $this->username = $username;
         $this->firstname = $firstname;
-        $this->lastnae = $lastname;
+        $this->lastname = $lastname;
         $this->email = $email;
         $this->birth_date = $birth_date;
         $this->country = $country;

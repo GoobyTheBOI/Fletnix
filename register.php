@@ -1,3 +1,5 @@
+<?php require_once ("./htmlgenerator.php"); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,7 +12,7 @@
 </head>
 
 <body class="body">
-    <?= require_once("./layouts/header.php"); ?>
+    <?php require_once("./layouts/header.php"); ?>
 
     <main class="main main--form">
         <div class="abonnement abonnement--grid">
@@ -72,7 +74,7 @@
 
         <section class="form__container">
             <h1 class="form__title">Sign up</h1>
-
+            <p class="form__error"><?= drawError(); ?></p>
             <form action="php/includes/signup.inc.php" method="post" class="form">
                 <label class="form__label" for="username">Username</label>
                 <input class="form__input" type="text" name="username" id="username" required>
@@ -369,7 +371,7 @@
             </div>
         </section>
     </main>
-    <?= require_once("./layouts/footer.php"); ?>
+    <?php require_once("./layouts/footer.php"); ?>
 </body>
 
 </html>
