@@ -15,7 +15,7 @@
         <main class="main main--form">
             <div class="form__container">
                 <h1 class="form__title">Login</h1>
-                <form action="#" method="post" class="form">
+                <form action="php/includes/login.inc.php" method="post" class="form">
                     <label class="form__label" for="email">Email</label>
                     <input class="form__input" type="email" name="email" id="email">
                     <label class="form__label" for="password">Password</label>
