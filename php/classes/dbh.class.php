@@ -3,7 +3,7 @@
 class Dbh {
     private $host = "localhost";
     private $user = "SA";
-    private $password = "p@ssw0rd";
+    private $password = "p@assw0rd";
     private $db_name = "Fletnix";
 
     protected function connect() {

@@ -1,4 +1,6 @@
 <?php
+    // require_once("php/classes/movies/movie.class.php");
+    // $movies = new Movie();
     function drawCards($aantal){
         // <a href="./the-assasin.html">
         //     <article class="card">

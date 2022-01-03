@@ -10,7 +10,7 @@
     </head>
 
     <body class="body">
-        <?= require_once("./layouts/header.php"); ?>
+        <?php require_once("./layouts/header.php"); ?>
 
         <main class="main main--form">
             <div class="form__container">
@@ -28,7 +28,7 @@
                 </div>
             </div>
         </main>
-        <?= require_once("./layouts/footer.php"); ?>
+        <?php require_once("./layouts/footer.php"); ?>
     </body>
 
 </html>

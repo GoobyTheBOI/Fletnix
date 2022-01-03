@@ -10,7 +10,7 @@
 </head>
 
 <body class="body">
-    <?= require_once("./layouts/header.php"); ?>
+    <?php require_once("./layouts/header.php"); ?>
 
     <main class="main main--privacy">
         <section class="informatie">
@@ -35,7 +35,7 @@
             </p>
         </section>
     </main>
-    <?= require_once("./layouts/footer.php"); ?>
+    <?php require_once("./layouts/footer.php"); ?>
 </body>
 
 </html>

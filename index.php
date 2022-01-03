@@ -1,5 +1,8 @@
 <?php
     require_once("./htmlgenerator.php");
+    require_once("php\classes\movies\movie.view.php");
+
+    $movie = new MovieView();
 ?>
 
 <!DOCTYPE html>
@@ -29,7 +32,7 @@
                     </a>
                 </div>
                 <div class="row__grid">
-                    <?= drawCards(5); ?>
+                    <?= $movie->showTopRated() ?>
                 </div>
             </section>
 
@@ -43,7 +46,7 @@
                     </a>
                 </div>
                 <div class="row__grid">
-                    <?= drawCards(5); ?>
+                    <?= $movie->showTopRatedGenre("Action") ?>
                 </div>
             </section>
         </main>
