@@ -25,28 +25,28 @@
                 <div class="row__flex row__flex--align-center">
                     <h2 class="row__title">TOP RATED</h2>
 
-                    <a href="./overzicht.html" class="row__see-al-link">
+                    <a href="./overzicht.php?title=top rated" class="row__see-al-link">
                         <div class="row__see-al-link--hover">
                             See all
                         </div>
                     </a>
                 </div>
                 <div class="row__grid">
-                    <?= $movie->showTopRated() ?>
+                    <?= $movie->show5TopRated() ?>
                 </div>
             </section>
 
             <section class="row">
                 <div class="row__flex row__flex--align-center">
                     <h2 class="row__title">Action</h2>
-                    <a href="./overzicht.html" class="row__see-al-link">
+                    <a href="./overzicht.php?title=action&genre[]=action" class="row__see-al-link">
                         <div class="row__see-al-link--hover">
                             See all
                         </div>
                     </a>
                 </div>
                 <div class="row__grid">
-                    <?= $movie->showTopRatedGenre("Action") ?>
+                    <?= $movie->show5TopRatedGenre("Action") ?>
                 </div>
             </section>
         </main>

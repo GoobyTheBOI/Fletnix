@@ -2,8 +2,8 @@
 require_once("movie.class.php");
 
 class MovieView extends Movie {
-    public function showTopRated() {
-        $results = $this->getTopRated();
+    public function show5TopRated() {
+        $results = $this->get5TopRated();
 
         $html = null;
         foreach ($results as $movie) {
@@ -60,8 +60,8 @@ class MovieView extends Movie {
         return date('Y', $dateToString);
     }
 
-    public function showTopRatedGenre($genre) {
-        $results = $this->getTopRatedGenre($genre);
+    public function show5TopRatedGenre($genre) {
+        $results = $this->get5TopRatedGenre($genre);
 
         $html = null;
         foreach ($results as $movie) {
@@ -233,6 +233,43 @@ class MovieView extends Movie {
                     </div>
                 </div>
             HTML;
+
+        return $html;
+    }
+
+    public function showAllMovies($title, $genres) {
+        $results = $this->getAllMovies($title, $genres);
+
+        $html = null;
+        foreach ($results as $movie) {
+            $season = $this->dateToSeason($movie["ReleaseDate"]);
+            $year = $this->dateToYear($movie["ReleaseDate"]);
+            $html.= <<<HTML
+                <a href="./filmdetail.php?id={$movie['FilmID']}">
+                    <article class="card">
+                        <img class="card__image card__image" src="./images/cover.jpg" alt="cover">
+
+                        <h2 class="card__title card__title--hover">
+                            {$movie["Title"]}
+                        </h2>
+
+                        <div class="card__hover-data card__hover-data--right">
+                            <div class="card__hover-data__header">
+                                {$season} {$year}
+                            </div>
+
+                            <div class="card__hover-data__studio">
+                                {$movie["Studio"]}
+                            </div>
+
+                            <div class="card__hover-data__genres">
+                                <div class="card__hover-data__genres--genre">{$movie["Genre"]}</div>
+                            </div>
+                        </div>
+                    </article>
+                </a>
+            HTML;
+        }
 
         return $html;
     }

@@ -2,7 +2,7 @@
 require_once("dbh.class.php");
 
 class Movie extends Dbh {
-    protected function getTopRated() {
+    protected function get5TopRated() {
         $query = "SELECT TOP 5 Film.FilmID, Film.Title, Film.ReleaseDate, Genre.Genre, Studio.Studio FROM Film
                 INNER JOIN Genre
                     ON Genre.GenreID = Film.GenreID
@@ -17,8 +17,56 @@ class Movie extends Dbh {
         return $results;
     }
 
-    protected function getTopRatedGenre($genre) {
-        $query = "SELECT Film.FilmID, Film.Title, Film.ReleaseDate, Genre.Genre, Studio.Studio FROM Film
+    protected function getAllMovies($title, $genres) {
+        $genreStr;
+        if(!empty($genres)){
+            global $genreStr;
+            $genreStr = implode("', '", $genres);
+            $query = "SELECT Film.FilmID, Film.Title, Film.ReleaseDate, Genre.Genre, Studio.Studio FROM Film
+                INNER JOIN Genre
+                    ON Genre.GenreID = Film.GenreID
+                INNER JOIN Studio
+                    ON Film.StudioID = Studio.StudioID
+                WHERE Genre IN ('$genreStr')";
+        }
+
+        if(empty($title) || empty($genres)){
+            $query = "SELECT Film.FilmID, Film.Title, Film.ReleaseDate, Genre.Genre, Studio.Studio FROM Film
+                INNER JOIN Genre
+                    ON Genre.GenreID = Film.GenreID
+                INNER JOIN Studio
+                    ON Film.StudioID = Studio.StudioID";
+        }
+
+        if (!empty($title) && !empty($genres)) {
+            $query = "SELECT Film.FilmID, Film.Title, Film.ReleaseDate, Genre.Genre, Studio.Studio FROM Film
+                INNER JOIN Genre
+                    ON Genre.GenreID = Film.GenreID
+                INNER JOIN Studio
+                    ON Film.StudioID = Studio.StudioID
+                WHERE Genre IN ('$genreStr')
+                AND Film.Title LIKE '%$title%'";
+        }
+
+        if (!empty($title)){
+            $query = "SELECT Film.FilmID, Film.Title, Film.ReleaseDate, Genre.Genre, Studio.Studio FROM Film
+                INNER JOIN Genre
+                    ON Genre.GenreID = Film.GenreID
+                INNER JOIN Studio
+                    ON Film.StudioID = Studio.StudioID
+                WHERE Film.Title LIKE '%$title%'";
+        }
+
+        $connection = $this->connect()->query($query);
+
+        $results = $connection->fetchAll();
+
+
+        return $results;
+    }
+
+    protected function get5TopRatedGenre($genre) {
+        $query = "SELECT TOP 5 Film.FilmID, Film.Title, Film.ReleaseDate, Genre.Genre, Studio.Studio FROM Film
                 INNER JOIN Genre
                     ON Genre.GenreID = Film.GenreID
                 INNER JOIN Studio
