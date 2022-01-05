@@ -18,14 +18,14 @@
         <?php require_once("./layouts/header.php"); ?>
         <main class="main">
             <section class="content">
-                <?= drawThumbnails(); ?>
+                <?= $movie->show3Reviews(); ?>
             </section>
 
             <section class="row">
                 <div class="row__flex row__flex--align-center">
                     <h2 class="row__title">TOP RATED</h2>
 
-                    <a href="./overzicht.php?title=top rated" class="row__see-al-link">
+                    <a href="./overzicht.php" class="row__see-al-link">
                         <div class="row__see-al-link--hover">
                             See all
                         </div>
@@ -39,7 +39,7 @@
             <section class="row">
                 <div class="row__flex row__flex--align-center">
                     <h2 class="row__title">Action</h2>
-                    <a href="./overzicht.php?title=action&genre[]=action" class="row__see-al-link">
+                    <a href="./overzicht.php?genre[]=action" class="row__see-al-link">
                         <div class="row__see-al-link--hover">
                             See all
                         </div>

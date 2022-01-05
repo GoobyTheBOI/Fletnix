@@ -237,8 +237,9 @@ class MovieView extends Movie {
         return $html;
     }
 
-    public function showAllMovies($title, $genres) {
-        $results = $this->getAllMovies($title, $genres);
+    public function showAllFilteredMovies($title, $genres, $studio, $publicationYear, $language) {
+        $markupGenre = implode("', '", $genres);
+        $results = $this->getAllFilteredMovies($title, $markupGenre, $studio, $publicationYear, $language);
 
         $html = null;
         foreach ($results as $movie) {
@@ -272,5 +273,135 @@ class MovieView extends Movie {
         }
 
         return $html;
+    }
+
+    public function showAllMovies() {
+        $results = $this->getAllMovies();
+
+        $html = null;
+        foreach ($results as $movie) {
+            $season = $this->dateToSeason($movie["ReleaseDate"]);
+            $year = $this->dateToYear($movie["ReleaseDate"]);
+            $html.= <<<HTML
+                <a href="./filmdetail.php?id={$movie['FilmID']}">
+                    <article class="card">
+                        <img class="card__image card__image" src="./images/cover.jpg" alt="cover">
+
+                        <h2 class="card__title card__title--hover">
+                            {$movie["Title"]}
+                        </h2>
+
+                        <div class="card__hover-data card__hover-data--right">
+                            <div class="card__hover-data__header">
+                                {$season} {$year}
+                            </div>
+
+                            <div class="card__hover-data__studio">
+                                {$movie["Studio"]}
+                            </div>
+
+                            <div class="card__hover-data__genres">
+                                <div class="card__hover-data__genres--genre">{$movie["Genre"]}</div>
+                            </div>
+                        </div>
+                    </article>
+                </a>
+            HTML;
+        }
+
+        return $html;
+    }
+
+    public function showAllGenres(){
+        $results = $this->getAllGenres();
+
+        $html = null;
+
+        foreach ($results as $genre) {
+            $html .= <<<HTML
+                <option value="{$genre['Genre']}">{$genre['Genre']}</option>
+            HTML;
+        }
+
+        return $html;
+    }
+
+    public function showAllYears(){
+        $results = $this->getAllYears();
+
+        $html = null;
+
+        foreach ($results as $year) {
+            $html .= <<<HTML
+                <option value="{$year['Year']}">{$year['Year']}</option>
+            HTML;
+        }
+
+        return $html;
+    }
+
+    public function showAllLanguage(){
+        $results = $this->getAllLanguage();
+
+        $html = null;
+
+        foreach ($results as $language) {
+            $html .= <<<HTML
+                <option value="{$language['Language']}">{$language['Language']}</option>
+            HTML;
+        }
+
+        return $html;
+    }
+
+    public function showAllStudios(){
+        $results = $this->getAllStudios();
+
+        $html = null;
+
+        foreach ($results as $studio) {
+            $html .= <<<HTML
+                <option value="{$studio['Studio']}">{$studio['Studio']}</option>
+            HTML;
+        }
+
+        return $html;
+    }
+
+    public function show3Reviews(){
+        $results = $this->get3Reviews();
+
+        $html = null;
+
+
+        $html .=  $this->drawThumbnail("head-image", NULL, $results[0]);
+
+        for ($i = 1; $i < count($results); $i++) {
+            if($i == 1) {
+                $html .= $this->drawThumbnail("sub-image", "margin-bottom-auto", $results[$i]);
+            }
+
+            if ($i == 2) {
+                $html .= $this->drawThumbnail("sub-image", "margin-top-auto", $results[$i]);
+            }
+        }
+
+        return $html;
+    }
+
+    protected function drawThumbnail($css_class, $margin_auto = NULL , $result){
+        return <<<HTML
+            <div class="thumbnail thumbnail--{$css_class} thumbnail--{$margin_auto}">
+                <img class="content__image content__image--{$css_class}"
+                    src="./images/thumbnail.png" alt="movie">
+
+                <div class="thumbnail__information thumbnail__information--hover thumbnail__information--hover-{$css_class}">
+                    <h3 class="thumbnail__title thumbnail__title--{$css_class}">{$result['Title']}</h3>
+                    <div class="thumbnail__description thumbnail__description--{$css_class}">
+                        <p>{$result['Review']}</p>
+                    </div>
+                </div>
+            </div>
+        HTML;
     }
 }
