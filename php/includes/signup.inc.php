@@ -11,7 +11,7 @@ if (isset($_POST['submit'])) {
     $accountnmbr = $_POST['accountnmbr'];
     $password = $_POST['password'];
     $password_repeat = $_POST['re-password'];
-    $gender = "Male";
+    $gender = $_POST['gender'];
 
     require("../classes/dbh.class.php");
     require("../classes/signup/signup.class.php");

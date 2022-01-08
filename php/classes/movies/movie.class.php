@@ -17,12 +17,10 @@ class Movie extends Dbh {
         return $results;
     }
 
-    protected function getAllMovies() {
-        $query = "SELECT Film.FilmID, Film.Title, Film.ReleaseDate, Genre.Genre, Studio.Studio FROM Film
-                INNER JOIN Genre
-                    ON Genre.GenreID = Film.GenreID
-                INNER JOIN Studio
-	                ON Film.StudioID = Studio.StudioID";
+
+    protected function getAllFilteredMovies($title, $genres, $studio, $publicationYear, $language) {
+        $genres;
+        $query = $this->filterQuery($title, $genres, $studio, $publicationYear, $language);
 
         $connection = $this->connect()->query($query);
 
@@ -32,8 +30,8 @@ class Movie extends Dbh {
         return $results;
     }
 
-    protected function getAllFilteredMovies($title, $genres, $studio, $publicationYear, $language) {
-        $genres;
+    private function filterQuery($title, $genres, $studio, $publicationYear, $language){
+        $query;
         switch(true){
             case !empty($title) && !empty($genres) && !empty($studio) && !empty($publicationYear) && !empty($language):
                 $query = "SELECT Film.FilmID, Film.Title, Film.ReleaseDate, Genre.Genre, Studio.Studio FROM Film
@@ -206,14 +204,16 @@ class Movie extends Dbh {
 						ON Film.LanguageID = Language.LanguageID
                     WHERE  Language.Language = '$language'";
                 break;
+            default:
+                $query = "SELECT Film.FilmID, Film.Title, Film.ReleaseDate, Genre.Genre, Studio.Studio FROM Film
+                INNER JOIN Genre
+                    ON Genre.GenreID = Film.GenreID
+                INNER JOIN Studio
+	                ON Film.StudioID = Studio.StudioID";
+                break;
         }
 
-        $connection = $this->connect()->query($query);
-
-        $results = $connection->fetchAll();
-
-
-        return $results;
+        return $query;
     }
 
     protected function get5TopRatedGenre($genre) {

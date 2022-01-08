@@ -1,4 +1,3 @@
-<?php session_start(); ?>
 <header class="header">
     <div class="header header__container">
         <div class="header__flex header__flex--align-center">
@@ -29,7 +28,8 @@
                         <a href="php/includes/logout.inc.php">
                             <div
                                 class="header header__button header header__button--vivid-sky-blue">
-                                Logout</div>
+                                Logout
+                            </div>
                         </a>
                     </li>
                 <?php else: ?>
@@ -42,9 +42,9 @@
                         </a>
                     </li>
                     <li class="menu__items">
-                        <a href="./register.php">
+                        <a href="./subscriptions.php">
                             <div class="header header__button header header__button--vivid-sky-blue">
-                                Registreer
+                                Sign up
                             </div>
                         </a>
                     </li>

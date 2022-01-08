@@ -1,18 +1,25 @@
 <footer class="footer">
     <div class="footer__container">
-        <div class="footer__social-media-images">
-            <img src="./images/social%20media/Instagram-logo-transparent-PNG.png"
-                alt="instagram">
-            <img src="./images/social%20media/Logo-google-icon-PNG.png" alt="google">
-            <img src="./images/social%20media/Popular-facebook-Logo-png.png"
-                alt="facebook">
-            <img src="./images/social%20media/Tiktok-modern-logo-icon-on-transparent-background-PNG.png"
-                alt="tiktok">
+        <div class="footer__logo">
+            <img src="images\logo.png" alt="logo">
+        </div>
+        <div class="footer__links">
+            <h1 class="footer__header">Links</h1>
+            <div class="footer__flex footer__flex--column">
+                <a class="footer__item footer__item--white" href="./privacy.php">Privacy</a>
+                <a class="footer__item footer__item--white" href="./over-ons.php">About us</a>
+            </div>
         </div>
 
-        <div class="footer__links">
-            <a class="footer__links--white" href="./privacy.php">Privacy</a>
-            <a class="footer__links--white" href="./over-ons.php">Over ons</a>
+        <div class="footer__social">
+            <h1 class="footer__header">Social</h1>
+
+            <div class="footer__flex footer__flex--column">
+                <a class="footer__item footer__item--white" href="#">Instagram</a>
+                <a class="footer__item footer__item--white" href="#">Google</a>
+                <a class="footer__item footer__item--white" href="#">Facebook</a>
+                <a class="footer__item footer__item--white" href="#">Tiktok</a>
+            </div>
         </div>
     </div>
 </footer>

@@ -39,6 +39,11 @@ class signUpController extends SignUp {
             exit();
         }
 
+        if($this->passwordLength() == false) {
+            header("location: ../../register.php?error=passwordlength");
+            exit();
+        }
+
         if ($this->passwordMatch() == false) {
             header("location: ../../register.php?error=passwordmatch");
             exit();
@@ -48,6 +53,8 @@ class signUpController extends SignUp {
             header("location: ../../register.php?error=userexist");
             exit();
         }
+
+        $_SESSION['subscription'] = null;
 
         $this->setUser($this->username, $this->firstname, $this->lastname, $this->email, $this->birth_date, $this->country, $this->subscription, $this->accountnmbr, $this->password, $this->gender);
 
@@ -69,6 +76,18 @@ class signUpController extends SignUp {
         $result;
 
         if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
+            $result = false;
+        }else {
+            $result = true;
+        }
+
+        return $result;
+    }
+
+    private function passwordLength() {
+        $result;
+
+        if (strlen($this->password) < 6) {
             $result = false;
         }else {
             $result = true;

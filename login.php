@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="css/style.css">
-        <title>FLETNIX</title>
-    </head>
+<?php require_once("./layouts/head.php"); ?>
 
     <body class="body">
         <?php require_once("./layouts/header.php"); ?>
@@ -20,7 +11,7 @@
                     <input class="form__input" type="email" name="email" id="email">
                     <label class="form__label" for="password">Password</label>
                     <input class="form__input" type="password" name="password" id="password">
-                    <input class="form__input form__input--submit" type="submit" name="submit" id="submit">
+                    <input class="form__input form__input--submit" value="Submit" type="submit" name="submit" id="submit">
                 </form>
 
                 <div class="form__link">

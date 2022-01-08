@@ -88,22 +88,4 @@
             </div>
         HTML;
     }
-
-    function drawError() {
-
-        $error;
-
-        if('userexist'):
-            $error = 'User already exist';
-        elseif('emptyinput'):
-            $error = "Field can't be empty";
-        elseif('email'):
-            $error = "Wrong type of email";
-        elseif('passwordmatch'):
-            $error = "Passwords are not the same";
-        endif;
-        return $error;
-    }
-
-
 ?>

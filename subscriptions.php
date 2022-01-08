@@ -1,5 +1,7 @@
 <?php
+    require_once ("./htmlgenerator.php");
     include_once('php\includes\session_start.inc.php');
+
     function showALlCountries() {
         $countries = [
             "Afghanistan",
@@ -263,60 +265,9 @@
         return $html;
     }
 
-    if(isset($_SESSION['subscription'])) {
-        $subscription = $_SESSION['subscription'];
-    } else{
-        header("location: subscriptions.php");
-    }
-
-    function showSubscription() {
-        global $subscription;
-        return <<<HTML
-            <input type="hidden" name="subscription" value="{$subscription}">
-        HTML;
-    }
-
-    function drawError() {
-
-        $error = null;
-
-        $errorResult = isset($_GET['error']) ? $_GET['error'] : false;
-
-
-        if($errorResult == 'userexist'):
-            $error = 'User already exist';
-        elseif($errorResult == 'emptyinput'):
-            $error = "Field can't be empty";
-        elseif($errorResult == 'email'):
-            $error = "Wrong type of email";
-        elseif($errorResult == 'passwordmatch'):
-            $error = "Passwords are not the same";
-        elseif($errorResult == 'passwordlength'):
-            $error = "Passwords must be longer then 5 letters";
-        endif;
-
-        return $error;
-    }
-
-    function showGender() {
-        $genders = [
-            'male',
-            'female',
-            'I prefer not to say'
-        ];
-
-        $html = null;
-
-        foreach($genders as $gender) {
-            $html .= <<<HTML
-                <div>
-                    <input type="radio" name="gender" id="{$gender}" value="{$gender}">
-                    <label for="{$gender}">{$gender}</label>
-                </div>
-            HTML;
-        }
-
-        return $html;
+    if(isset($_POST['submit'])) {
+        $_SESSION['subscription'] = $_POST['subscription'];
+        header("location: register.php");
     }
 ?>
 
@@ -326,43 +277,77 @@
     <?php require_once("./layouts/header.php"); ?>
 
     <main class="main main--form">
-        <section class="form__container">
-            <h1 class="form__title">Sign up</h1>
-            <p class="form__error"><?= drawError(); ?></p>
-            <form action="php/includes/signup.inc.php" method="post" class="form">
-                <label class="form__label" for="username">Username</label>
-                <input class="form__input" type="text" name="username" id="username" required>
-                <label class="form__label" for="fname">Firstname</label>
-                <input class="form__input" type="text" name="fname" id="fname" required>
-                <label class="form__label" for="lname">Lastname</label>
-                <input class="form__input" type="text" name="lname" id="lname" required>
-                <label class="form__label" for="gender"> Gender</label>
-                <div class="form__gender">
-                    <?= showGender(); ?>
-                </div>
-                <label class="form__label" for="email">Email</label>
-                <input class="form__input" type="email" name="email" id="email" required>
-                <label class="form__label" for="bdate">Birth date</label>
-                <input class="form__input" type="date" name="bdate" id="bdate" required>
-                <label class="form__label" for="country">Country</label>
-                <select id="country" name="country" class="form__input">
-                    <option value="" selected> - Select your country - </option>
-                    <?= showALlCountries(); ?>
-                </select>
-                <label class="form__label" for="accountnmbr">Account number</label>
-                <input class="form__input" type="text" name="accountnmbr" id="accountnmbr" required>
-                <label class="form__label" for="password">Password</label>
-                <input class="form__input" type="password" name="password" id="password" required>
-                <label class="form__label" for="re-password">Re-enter password</label>
-                <input class="form__input" type="password" name="re-password" id="re-password" required>
-                <?= showSubscription(); ?>
-                <input class="form__input form__input--submit" value="Submit" type="submit" name="submit" id="submit">
-            </form>
+        <form method="POST">
+            <div class="abonnement abonnement--grid">
+                <article class="abonnement__card">
+                    <h2 class="abonnement__title">
+                        Standard
+                    </h2>
 
-            <div class="form__link">
-                Already registered? <span class="form__link--blue"><a href="./login.php">Login</a></span>
+                    <div class="abonnement__geld">
+                        50 &euro;
+                    </div>
+
+                    <div class="abonnement__detail abonnement__detail--margin">
+                        <div>HD</div>
+                        <div class="abonnement__detail--flex-end">&#10004;</div>
+                    </div>
+                    <div class="abonnement__detail">
+                        <div>Cancel anytime</div>
+                        <div class="abonnement__detail--flex-end">&#10004;</div>
+                    </div>
+                    <div class="abonnement__radio">
+                        <input type="radio" value="Standard" name="subscription" id="Standard">
+                    </div>
+                </article>
+                <article class="abonnement__card">
+                    <h2 class="abonnement__title">
+                        Ultiem
+                    </h2>
+
+                    <div class="abonnement__geld">
+                        50 &euro;
+                    </div>
+
+                    <div class="abonnement__detail abonnement__detail--margin">
+                        <div>HD</div>
+                        <div class="abonnement__detail--flex-end">&#10004;</div>
+                    </div>
+                    <div class="abonnement__detail">
+                        <div>Cancel anytime</div>
+                        <div class="abonnement__detail--flex-end">&#10004;</div>
+                    </div>
+                    <div class="abonnement__radio">
+                        <input type="radio" value="Ultiem" name="subscription" id="Standard">
+                    </div>
+                </article>
+                <article class="abonnement__card">
+                    <h2 class="abonnement__title">
+                        Pro
+                    </h2>
+
+                    <div class="abonnement__geld">
+                        50 &euro;
+                    </div>
+
+                    <div class="abonnement__detail abonnement__detail--margin">
+                        <div>HD</div>
+                        <div class="abonnement__detail--flex-end">&#10004;</div>
+                    </div>
+                    <div class="abonnement__detail">
+                        <div>Cancel anytime</div>
+                        <div class="abonnement__detail--flex-end">&#10004;</div>
+                    </div>
+                    <div class="abonnement__radio">
+                        <input type="radio" value="Pro" name="subscription" id="Standard">
+                    </div>
+                </article>
             </div>
-        </section>
+
+            <div class="abonnement__flex abonnement__flex--center">
+                <input type="submit" class="abonnement__button abonnement__button--red" name="submit" value="Next">
+            </div>
+        </form>
     </main>
     <?php require_once("./layouts/footer.php"); ?>
 </body>

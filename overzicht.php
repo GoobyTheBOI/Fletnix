@@ -1,5 +1,6 @@
 <?php
     require_once("./php/classes/movies/movie.view.php");
+    include_once('php\includes\session_start.inc.php');
     $movie = new MovieView();
     $selectedGenres = [];
     $titleInput = isset($_GET['movietitle']) ? $_GET['movietitle'] : '';
@@ -53,32 +54,19 @@
     function showMovies($titleInput, $selectedGenres, $studio, $publicationYear, $language){
         global $movie;
 
-        if(empty($_GET)):
-            return $movie->showAllMovies();
-        elseif(isset($_GET['movietitle']) && empty($_GET['movietitle'])):
-            return $movie->showAllMovies();
-        else:
-            return $movie->showAllFilteredMovies($titleInput, $selectedGenres, $studio, $publicationYear, $language);
-        endif;
+        // if(empty($_GET['movietitle'])) {}
+
+        return $movie->showAllFilteredMovies($titleInput, $selectedGenres, $studio, $publicationYear, $language);
     }
 
 ?>
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
-    <title>FLETNIX</title>
-</head>
+<?php require_once("./layouts/head.php"); ?>
 
 <body class="body body--overzicht">
     <?php require_once("./layouts/header.php"); ?>
 
     <aside class="filter">
-        <div>
             <form class="filter--container" method="GET">
                 <div>
                     <label for="movietitle" class="filter__label">Movie Title</label>
@@ -119,11 +107,10 @@
                 </div>
                 <div>
                     <div class="filter__input--wrap">
-                        <input type="submit" id="submit" class="filter__input">
+                        <input type="submit" value="Submit" id="submit" class="filter__input">
                     </div>
                 </div>
             </form>
-        </div>
         <?= showAllFilters(); ?>
     </aside>
 

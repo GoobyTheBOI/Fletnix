@@ -1,19 +1,30 @@
 <?php
     require_once("./htmlgenerator.php");
     require_once("php\classes\movies\movie.view.php");
+    include_once('php\includes\session_start.inc.php');
 
     $movie = new MovieView();
+
+
+    function movieTitle($title, $link) {
+        $html;
+
+        $html .= <<<HTML
+            <div class="row__flex row__flex--align-center">
+                <h2 class="row__title">{$title}</h2>
+                <a href="{$link}" class="row__see-al-link">
+                    <div class="row__see-al-link--hover">
+                        See all
+                    </div>
+                </a>
+            </div>
+        HTML;
+
+        return $html;
+    }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="css/style.css">
-        <title>FLETNIX</title>
-    </head>
+<?php require_once("./layouts/head.php"); ?>
     <body class="body">
         <?php require_once("./layouts/header.php"); ?>
         <main class="main">
@@ -22,29 +33,14 @@
             </section>
 
             <section class="row">
-                <div class="row__flex row__flex--align-center">
-                    <h2 class="row__title">TOP RATED</h2>
-
-                    <a href="./overzicht.php" class="row__see-al-link">
-                        <div class="row__see-al-link--hover">
-                            See all
-                        </div>
-                    </a>
-                </div>
+                <?= movieTitle("Top Rated", "./overzicht.php"); ?>
                 <div class="row__grid">
                     <?= $movie->show5TopRated() ?>
                 </div>
             </section>
 
             <section class="row">
-                <div class="row__flex row__flex--align-center">
-                    <h2 class="row__title">Action</h2>
-                    <a href="./overzicht.php?genre[]=action" class="row__see-al-link">
-                        <div class="row__see-al-link--hover">
-                            See all
-                        </div>
-                    </a>
-                </div>
+                <?= movieTitle("Action", "./overzicht.php?genre[]=action"); ?>
                 <div class="row__grid">
                     <?= $movie->show5TopRatedGenre("Action") ?>
                 </div>

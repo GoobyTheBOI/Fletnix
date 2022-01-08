@@ -1,3 +1,5 @@
+<?php include_once('php\includes\session_start.inc.php'); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
