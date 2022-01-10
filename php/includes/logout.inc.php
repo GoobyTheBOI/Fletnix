@@ -1,6 +1,6 @@
 <?php
 
-session_start();
+include('./session_start.inc.php');
 session_unset();
 session_destroy();
 

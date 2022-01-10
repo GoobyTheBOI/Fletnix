@@ -5,6 +5,7 @@ class SignUp extends Dbh {
         $connection = $this->connect()->prepare("INSERT INTO Users VALUES(:username, :firstname, :lastname, :email, :birth_date, :country, :gender, :subscription, :accountnmbr, :password);");
 
         $hash_password = password_hash($password, PASSWORD_DEFAULT);
+        $connection->execute([$username, $firstname, $lastname, $email, $birth_date, $country, $gender, $subscription, $accountnmbr, $hash_password]);
 
         if (!$connection->execute([$username, $firstname, $lastname, $email, $birth_date, $country, $gender, $subscription, $accountnmbr, $hash_password])) {
             $connection = null;
@@ -17,6 +18,7 @@ class SignUp extends Dbh {
 
     protected function checkUser($username, $email) {
         $connection = $this->connect()->prepare("SELECT COUNT(*) FROM Users WHERE username = :username OR email = :email;");
+        $connection->execute([$username, $email]);
 
         if (!$connection->execute([$username, $email])) {
             $connection = null;

@@ -3,11 +3,13 @@ require_once("dbh.class.php");
 
 class Movie extends Dbh {
     protected function get5TopRated() {
-        $query = "SELECT TOP 5 Film.FilmID, Film.Title, Film.ReleaseDate, Genre.Genre, Studio.Studio FROM Film
+        $query = "SELECT TOP 5 Film.FilmID, Film.Title, Film.ReleaseDate, Film.Img, Genre.Genre, Studio.Studio FROM Film
                 INNER JOIN Genre
                     ON Genre.GenreID = Film.GenreID
                 INNER JOIN Studio
-	                ON Film.StudioID = Studio.StudioID";
+	                ON Film.StudioID = Studio.StudioID
+                WHERE Film.Review IS NOT NULL
+                ORDER BY Film.avg_score DESC";
 
         $connection = $this->connect()->query($query);
 
@@ -34,7 +36,7 @@ class Movie extends Dbh {
         $query;
         switch(true){
             case !empty($title) && !empty($genres) && !empty($studio) && !empty($publicationYear) && !empty($language):
-                $query = "SELECT Film.FilmID, Film.Title, Film.ReleaseDate, Genre.Genre, Studio.Studio FROM Film
+                $query = "SELECT Film.FilmID, Film.Img, Film.Title, Film.ReleaseDate, Genre.Genre, Studio.Studio FROM Film
                     INNER JOIN Genre
                         ON Genre.GenreID = Film.GenreID
                     INNER JOIN Studio
@@ -49,7 +51,7 @@ class Movie extends Dbh {
                 break;
 
             case !empty($title) && !empty($studio) && !empty($publicationYear) && !empty($language):
-                $query = "SELECT Film.FilmID, Film.Title, Film.ReleaseDate, Genre.Genre, Studio.Studio FROM Film
+                $query = "SELECT Film.FilmID, Film.Img, Film.Title, Film.ReleaseDate, Genre.Genre, Studio.Studio FROM Film
                     INNER JOIN Genre
                         ON Genre.GenreID = Film.GenreID
                     INNER JOIN Studio
@@ -63,7 +65,7 @@ class Movie extends Dbh {
                 break;
 
             case !empty($studio) && !empty($publicationYear) && !empty($language):
-                $query = "SELECT Film.FilmID, Film.Title, Film.ReleaseDate, Genre.Genre, Studio.Studio FROM Film
+                $query = "SELECT Film.FilmID, Film.Img, Film.Title, Film.ReleaseDate, Genre.Genre, Studio.Studio FROM Film
                     INNER JOIN Genre
                         ON Genre.GenreID = Film.GenreID
                     INNER JOIN Studio
@@ -76,7 +78,7 @@ class Movie extends Dbh {
                 break;
 
             case !empty($title) && !empty($genres) && !empty($publicationYear) && !empty($language):
-                $query = "SELECT Film.FilmID, Film.Title, Film.ReleaseDate, Genre.Genre, Studio.Studio FROM Film
+                $query = "SELECT Film.FilmID, Film.Img, Film.Title, Film.ReleaseDate, Genre.Genre, Studio.Studio FROM Film
                     INNER JOIN Genre
                         ON Genre.GenreID = Film.GenreID
                     INNER JOIN Studio
@@ -90,7 +92,7 @@ class Movie extends Dbh {
                 break;
 
             case !empty($title) && !empty($genres) && !empty($studio) && !empty($language):
-                $query = "SELECT Film.FilmID, Film.Title, Film.ReleaseDate, Genre.Genre, Studio.Studio FROM Film
+                $query = "SELECT Film.FilmID, Film.Img, Film.Title, Film.ReleaseDate, Genre.Genre, Studio.Studio FROM Film
                     INNER JOIN Genre
                         ON Genre.GenreID = Film.GenreID
                     INNER JOIN Studio
@@ -104,7 +106,7 @@ class Movie extends Dbh {
                 break;
 
             case !empty($title) && !empty($genres) && !empty($studio) && !empty($publicationYear):
-                $query = "SELECT Film.FilmID, Film.Title, Film.ReleaseDate, Genre.Genre, Studio.Studio FROM Film
+                $query = "SELECT Film.FilmID, Film.Img, Film.Title, Film.ReleaseDate, Genre.Genre, Studio.Studio FROM Film
                     INNER JOIN Genre
                         ON Genre.GenreID = Film.GenreID
                     INNER JOIN Studio
@@ -118,7 +120,7 @@ class Movie extends Dbh {
                 break;
 
             case !empty($title) && !empty($genres) && !empty($studio):
-                $query = "SELECT Film.FilmID, Film.Title, Film.ReleaseDate, Genre.Genre, Studio.Studio FROM Film
+                $query = "SELECT Film.FilmID, Film.Img, Film.Title, Film.ReleaseDate, Genre.Genre, Studio.Studio FROM Film
                     INNER JOIN Genre
                         ON Genre.GenreID = Film.GenreID
                     INNER JOIN Studio
@@ -129,7 +131,7 @@ class Movie extends Dbh {
                 break;
 
             case !empty($title) && !empty($genres):
-                $query = "SELECT Film.FilmID, Film.Title, Film.ReleaseDate, Genre.Genre, Studio.Studio FROM Film
+                $query = "SELECT Film.FilmID, Film.Img, Film.Title, Film.ReleaseDate, Genre.Genre, Studio.Studio FROM Film
                     INNER JOIN Genre
                         ON Genre.GenreID = Film.GenreID
                     INNER JOIN Studio
@@ -139,7 +141,7 @@ class Movie extends Dbh {
                 break;
 
             case !empty($genres) && !empty($studio):
-                $query = "SELECT Film.FilmID, Film.Title, Film.ReleaseDate, Genre.Genre, Studio.Studio FROM Film
+                $query = "SELECT Film.FilmID, Film.Img, Film.Title, Film.ReleaseDate, Genre.Genre, Studio.Studio FROM Film
                     INNER JOIN Genre
                         ON Genre.GenreID = Film.GenreID
                     INNER JOIN Studio
@@ -149,7 +151,7 @@ class Movie extends Dbh {
                 break;
 
             case !empty($title) && !empty($publicationYear):
-                $query = "SELECT Film.FilmID, Film.Title, Film.ReleaseDate, Genre.Genre, Studio.Studio FROM Film
+                $query = "SELECT Film.FilmID, Film.Img, Film.Title, Film.ReleaseDate, Genre.Genre, Studio.Studio FROM Film
                     INNER JOIN Genre
                         ON Genre.GenreID = Film.GenreID
                     INNER JOIN Studio
@@ -159,7 +161,7 @@ class Movie extends Dbh {
                 break;
 
             case !empty($genres):
-                $query = "SELECT Film.FilmID, Film.Title, Film.ReleaseDate, Genre.Genre, Studio.Studio FROM Film
+                $query = "SELECT Film.FilmID, Film.Img, Film.Title, Film.ReleaseDate, Genre.Genre, Studio.Studio FROM Film
                     INNER JOIN Genre
                         ON Genre.GenreID = Film.GenreID
                     INNER JOIN Studio
@@ -168,7 +170,7 @@ class Movie extends Dbh {
                 break;
 
             case !empty($title):
-                $query = "SELECT Film.FilmID, Film.Title, Film.ReleaseDate, Genre.Genre, Studio.Studio FROM Film
+                $query = "SELECT Film.FilmID, Film.Img, Film.Title, Film.ReleaseDate, Genre.Genre, Studio.Studio FROM Film
                     INNER JOIN Genre
                         ON Genre.GenreID = Film.GenreID
                     INNER JOIN Studio
@@ -177,7 +179,7 @@ class Movie extends Dbh {
                 break;
 
             case !empty($studio):
-                $query = "SELECT Film.FilmID, Film.Title, Film.ReleaseDate, Genre.Genre, Studio.Studio FROM Film
+                $query = "SELECT Film.FilmID, Film.Img, Film.Title, Film.ReleaseDate, Genre.Genre, Studio.Studio FROM Film
                     INNER JOIN Genre
                         ON Genre.GenreID = Film.GenreID
                     INNER JOIN Studio
@@ -186,7 +188,7 @@ class Movie extends Dbh {
                 break;
 
             case !empty($publicationYear):
-                $query = "SELECT Film.FilmID, Film.Title, Film.ReleaseDate, Genre.Genre, Studio.Studio FROM Film
+                $query = "SELECT Film.FilmID, Film.Img, Film.Title, Film.ReleaseDate, Genre.Genre, Studio.Studio FROM Film
                     INNER JOIN Genre
                         ON Genre.GenreID = Film.GenreID
                     INNER JOIN Studio
@@ -195,7 +197,7 @@ class Movie extends Dbh {
                 break;
 
             case !empty($language):
-                $query = "SELECT Film.FilmID, Film.Title, Film.ReleaseDate, Genre.Genre, Studio.Studio FROM Film
+                $query = "SELECT Film.FilmID, Film.Img, Film.Title, Film.ReleaseDate, Genre.Genre, Studio.Studio FROM Film
                     INNER JOIN Genre
                         ON Genre.GenreID = Film.GenreID
                     INNER JOIN Studio
@@ -205,7 +207,7 @@ class Movie extends Dbh {
                     WHERE  Language.Language = '$language'";
                 break;
             default:
-                $query = "SELECT Film.FilmID, Film.Title, Film.ReleaseDate, Genre.Genre, Studio.Studio FROM Film
+                $query = "SELECT Film.FilmID, Film.Img, Film.Title, Film.ReleaseDate, Genre.Genre, Studio.Studio FROM Film
                 INNER JOIN Genre
                     ON Genre.GenreID = Film.GenreID
                 INNER JOIN Studio
@@ -217,12 +219,13 @@ class Movie extends Dbh {
     }
 
     protected function get5TopRatedGenre($genre) {
-        $query = "SELECT TOP 5 Film.FilmID, Film.Title, Film.ReleaseDate, Genre.Genre, Studio.Studio FROM Film
+        $query = "SELECT TOP 5 Film.FilmID, Film.Title, Film.ReleaseDate, Film.Img, Genre.Genre, Studio.Studio FROM Film
                 INNER JOIN Genre
                     ON Genre.GenreID = Film.GenreID
                 INNER JOIN Studio
 	                ON Film.StudioID = Studio.StudioID
-                WHERE Genre.Genre = '$genre'";
+                WHERE Genre.Genre = '$genre'
+                AND Film.Review IS NOT NULL";
 
         $connection = $this->connect()->query($query);
 
@@ -232,7 +235,7 @@ class Movie extends Dbh {
     }
 
     protected function getMovieDetail($id) {
-        $query = "SELECT Film.FilmID, Film.Title, Film.ReleaseDate, Genre.Genre, Studio.Studio, Film.RunTimeMinutes, Film.BudgetDollars, Film.OscarNominations, Film.OscarWins, Director.FullName AS 'Director Fullname' FROM Film
+        $query = "SELECT Film.FilmID, Film.Title, Film.ReleaseDate, Film.Img, Film.Background_Img, Film.Review, Genre.Genre, Studio.Studio, Film.RunTimeMinutes, Film.BudgetDollars, Film.OscarNominations, Film.OscarWins, Director.FullName AS 'Director Fullname', Director.Img AS 'Director IMG' FROM Film
                 INNER JOIN Genre
                     ON Genre.GenreID = Film.GenreID
                 INNER JOIN Studio
@@ -249,13 +252,18 @@ class Movie extends Dbh {
 
         $connection = $this->connect()->query($query);
 
+        if($connection->rowCount() == 0) {
+            header("location: 404.php");
+            exit();
+        }
+
         $results = $connection->fetchAll();
 
         return $results;
     }
 
     protected function getActors($id){
-        $query = "SELECT Actor.FullName AS 'Actor Fullname', Role.Role FROM Film
+        $query = "SELECT Actor.FullName, Actor.FullName AS 'Actor Fullname', Role.Role, Actor.Img FROM Film
                 INNER JOIN Role
                     ON Role.FilmID = Film.FilmID
                 INNER JOIN Actor
@@ -270,7 +278,7 @@ class Movie extends Dbh {
     }
 
     protected function getRecomendations($id, $genre) {
-        $query = "SELECT TOP 10 Film.FilmID, Film.Title FROM Film
+        $query = "SELECT TOP 10 Film.FilmID, Film.Title, Film.Img FROM Film
                 INNER JOIN Genre
                     ON Genre.GenreID = Film.GenreID
                 WHERE Film.FilmID <> $id and Genre.Genre = '$genre'";

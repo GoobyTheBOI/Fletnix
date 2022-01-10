@@ -8,8 +8,6 @@
     $publicationYear = isset($_GET['year']) ? $_GET['year'] : '';
     $language = isset($_GET['language']) ? $_GET['language'] : '';
 
-    var_dump($titleInput);
-
     function showAllFilters() {
         global $titleInput;
         global $studio;

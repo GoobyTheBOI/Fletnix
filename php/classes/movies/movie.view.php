@@ -12,7 +12,7 @@ class MovieView extends Movie {
             $html.= <<<HTML
                 <a href="./filmdetail.php?id={$movie['FilmID']}">
                     <article class="card">
-                        <img class="card__image card__image" src="./images/cover.jpg" alt="cover">
+                        <img class="card__image card__image" src="{$movie['Img']}" alt="cover">
 
                         <h2 class="card__title card__title--hover">
                             {$movie["Title"]}
@@ -70,7 +70,7 @@ class MovieView extends Movie {
             $html.= <<<HTML
                 <a href="./filmdetail.php?id={$movie['FilmID']}">
                     <article class="card">
-                        <img class="card__image card__image" src="./images/cover.jpg" alt="cover">
+                        <img class="card__image card__image" src="{$movie['Img']}" alt="cover">
 
                         <h2 class="card__title card__title--hover">
                             {$movie["Title"]}
@@ -107,16 +107,16 @@ class MovieView extends Movie {
         $recomendations = $this->getRecomendations($id, $movie['Genre']);
 
         $html.= <<<HTML
-                    <div class="detail__image--background">
+                    <div class="detail__image--background" style="background-image: url({$movie['Background_Img']});">
                         <div class="detail__image--shadow"></div>
                     </div>
                     <div class="detail__container">
-                        <img class="detail__image detail__image--cover" src="./images/cover.jpg" alt="logo">
+                        <img class="detail__image detail__image--cover" src="{$movie['Img']}" alt="logo">
 
                         <div class="detail__header-content">
                             <h1 class="detail__title">{$movie['Title']}</h1>
                             <p class="detail__description">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident distinctio vero ea perferendis asperiores itaque magnam architecto vel nesciunt ab ullam, sunt eos placeat autem illo cupiditate tempora corporis sint!
+                                {$movie['Review']}
                             </p>
                         </div>
                     </div>
@@ -170,7 +170,7 @@ class MovieView extends Movie {
                     $html.= <<<HTML
                             <article class="card">
                                 <div class="detail__grid detail__grid--role-card">
-                                    <img class="detail__image" src="./images/actor_and_staff.jpg"
+                                    <img class="detail__image" src="{$actor['Img']}"
                                         alt="cover">
                                     <div class="detail__movie-information">
                                         <h2 class="detail__actor">{$actor['Actor Fullname']}</h2>
@@ -189,7 +189,7 @@ class MovieView extends Movie {
                         <div class="detail__grid detail__grid--movie-info detail__grid--staff detail__grid--padding-top">
                             <article class="card">
                                 <div class="detail__grid detail__grid--role-card">
-                                    <img class="detail__image" src="./images/actor_and_staff.jpg" alt="cover">
+                                    <img class="detail__image" src="{$movie['Director IMG']}" alt="cover">
                                     <div class="detail__movie-information">
                                         <h2 class="detail__actor">{$movie['Director Fullname']}</h2>
                                     </div>
@@ -217,7 +217,7 @@ class MovieView extends Movie {
                 $html.= <<<HTML
                     <a href="./filmdetail.php?id={$recomendation['FilmID']}">
                         <article class="card">
-                            <img class="detail__image detail__image--recomendation" src="./images/cover.jpg" alt="cover">
+                            <img class="detail__image detail__image--recomendation" src="{$recomendation['Img']}" alt="cover">
                             <h2 class="card__title card__title--hover">
                                 {$recomendation['Title']}
                             </h2>
@@ -248,7 +248,7 @@ class MovieView extends Movie {
             $html.= <<<HTML
                 <article class="card">
                     <a href="./filmdetail.php?id={$movie['FilmID']}">
-                        <img class="card__image card__image" src="./images/cover.jpg" alt="cover">
+                        <img class="card__image card__image" src="{$movie['Img']}" alt="cover">
 
                         <h2 class="card__title card__title--hover">
                             {$movie["Title"]}

@@ -1,4 +1,7 @@
-<?php require_once("./layouts/head.php"); ?>
+<?php
+require_once("./layouts/head.php");
+include_once('php\includes\form_errors.inc.php');
+?>
 
     <body class="body">
         <?php require_once("./layouts/header.php"); ?>
@@ -6,6 +9,7 @@
         <main class="main main--form">
             <div class="form__container">
                 <h1 class="form__title">Login</h1>
+                <p class="form__error"><?= drawError(); ?></p>
                 <form action="php/includes/login.inc.php" method="post" class="form">
                     <label class="form__label" for="email">Email</label>
                     <input class="form__input" type="email" name="email" id="email">

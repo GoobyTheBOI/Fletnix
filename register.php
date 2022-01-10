@@ -1,5 +1,6 @@
 <?php
     include_once('php\includes\session_start.inc.php');
+    include_once('php\includes\form_errors.inc.php');
     function showALlCountries() {
         $countries = [
             "Afghanistan",
@@ -274,28 +275,6 @@
         return <<<HTML
             <input type="hidden" name="subscription" value="{$subscription}">
         HTML;
-    }
-
-    function drawError() {
-
-        $error = null;
-
-        $errorResult = isset($_GET['error']) ? $_GET['error'] : false;
-
-
-        if($errorResult == 'userexist'):
-            $error = 'User already exist';
-        elseif($errorResult == 'emptyinput'):
-            $error = "Field can't be empty";
-        elseif($errorResult == 'email'):
-            $error = "Wrong type of email";
-        elseif($errorResult == 'passwordmatch'):
-            $error = "Passwords are not the same";
-        elseif($errorResult == 'passwordlength'):
-            $error = "Passwords must be longer then 5 letters";
-        endif;
-
-        return $error;
     }
 
     function showGender() {

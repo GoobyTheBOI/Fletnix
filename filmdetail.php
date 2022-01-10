@@ -4,6 +4,10 @@
 
     $movie = new MovieView();
 
+    if(!isset($_SESSION['user_id'])){
+        header("location: ./login.php");
+    }
+
     if (!empty($_GET['id']) && $_GET['id'] > 0 && $_GET['id'] < 2147483647) {
         $id = (int)$_GET['id'];
     }else{
