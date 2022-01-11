@@ -23,12 +23,6 @@ class Login extends Dbh {
             $connection = $this->connect()->prepare("SELECT [user_id], username, email FROM Users WHERE email = :email AND [password] = :password");
             $connection->execute([$email, $passwordHashed[0]["password"]]);
 
-            if (!$connection->execute([$email, $passwordHashed[0]["password"]])) {
-                $connection = null;
-                header("location: ../../login.php?error=connectionfailed");
-                exit();
-            }
-
             $user = $connection->fetchAll();
             session_start();
             $_SESSION['user_id'] = $user[0]['user_id'];

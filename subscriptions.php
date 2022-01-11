@@ -1,5 +1,4 @@
 <?php
-    require_once ("./htmlgenerator.php");
     include_once('php\includes\session_start.inc.php');
 
     function showALlCountries() {

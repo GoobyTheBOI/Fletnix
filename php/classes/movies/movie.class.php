@@ -19,12 +19,12 @@ class Movie extends Dbh {
         return $results;
     }
 
-
     protected function getAllFilteredMovies($title, $genres, $studio, $publicationYear, $language) {
-        $genres;
-        $query = $this->filterQuery($title, $genres, $studio, $publicationYear, $language);
+        // $genres;
+        $queryResult = $this->filterQuery($title, $genres, $studio, $publicationYear, $language);
 
-        $connection = $this->connect()->query($query);
+        $connection = $this->connect()->prepare($queryResult[0]);
+        $connection->execute($queryResult[1]);
 
         $results = $connection->fetchAll();
 
@@ -33,7 +33,14 @@ class Movie extends Dbh {
     }
 
     private function filterQuery($title, $genres, $studio, $publicationYear, $language){
-        $query;
+        $title = $this->isFilterValueEmpty($title);
+        $studio = $this->isFilterValueEmpty($studio);
+        $genres = "$genres";
+        $language = "$language";
+
+        $query = null;
+        $execute = null;
+
         switch(true){
             case !empty($title) && !empty($genres) && !empty($studio) && !empty($publicationYear) && !empty($language):
                 $query = "SELECT Film.FilmID, Film.Img, Film.Title, Film.ReleaseDate, Genre.Genre, Studio.Studio FROM Film
@@ -43,11 +50,12 @@ class Movie extends Dbh {
                         ON Film.StudioID = Studio.StudioID
                     INNER JOIN Language
 						ON Film.LanguageID = Language.LanguageID
-                    WHERE Genre IN ('$genres')
-                    AND Language.Language = '$language'
-                    AND Film.Title LIKE '%$title%'
-                    AND Studio.Studio LIKE '%$studio%'
-                    AND YEAR(Film.ReleaseDate) = $publicationYear";
+                    WHERE Genre IN (:genres)
+                    AND Language.Language = :language
+                    AND Film.Title LIKE :title
+                    AND Studio.Studio LIKE :studio
+                    AND YEAR(Film.ReleaseDate) = :publicationYear";
+                $execute = [$genres, $language, $title, $studio, $publicationYear];
                 break;
 
             case !empty($title) && !empty($studio) && !empty($publicationYear) && !empty($language):
@@ -58,10 +66,11 @@ class Movie extends Dbh {
                         ON Film.StudioID = Studio.StudioID
                     INNER JOIN Language
 						ON Film.LanguageID = Language.LanguageID
-                    WHERE Language.Language = '$language'
-                    AND Film.Title LIKE '%$title%'
-                    AND Studio.Studio LIKE '%$studio%'
-                    AND YEAR(Film.ReleaseDate) = $publicationYear";
+                    WHERE Language.Language = :language
+                    AND Film.Title LIKE :title
+                    AND Studio.Studio LIKE :studio
+                    AND YEAR(Film.ReleaseDate) = :publicationYear";
+                $execute = [$language, $title, $studio, $publicationYear];
                 break;
 
             case !empty($studio) && !empty($publicationYear) && !empty($language):
@@ -72,9 +81,10 @@ class Movie extends Dbh {
                         ON Film.StudioID = Studio.StudioID
                     INNER JOIN Language
 						ON Film.LanguageID = Language.LanguageID
-                    WHERE Language.Language = '$language'
-                    AND Studio.Studio LIKE '%$studio%'
-                    AND YEAR(Film.ReleaseDate) = $publicationYear";
+                    WHERE Language.Language = :language
+                    AND Studio.Studio LIKE :studio
+                    AND YEAR(Film.ReleaseDate) = :publicationYear";
+                $execute = [$language, $studio, $publicationYear];
                 break;
 
             case !empty($title) && !empty($genres) && !empty($publicationYear) && !empty($language):
@@ -85,10 +95,11 @@ class Movie extends Dbh {
                         ON Film.StudioID = Studio.StudioID
                     INNER JOIN Language
 						ON Film.LanguageID = Language.LanguageID
-                    WHERE Genre IN ('$genres')
-                    AND Language.Language = '$language'
-                    AND Film.Title LIKE '%$title%'
-                    AND YEAR(Film.ReleaseDate) = $publicationYear";
+                    WHERE Genre IN (:genres)
+                    AND Language.Language = :language
+                    AND Film.Title LIKE :title
+                    AND YEAR(Film.ReleaseDate) = :publicationYear";
+                $execute = [$genres, $language, $title, $publicationYear];
                 break;
 
             case !empty($title) && !empty($genres) && !empty($studio) && !empty($language):
@@ -99,10 +110,11 @@ class Movie extends Dbh {
                         ON Film.StudioID = Studio.StudioID
                     INNER JOIN Language
 						ON Film.LanguageID = Language.LanguageID
-                    WHERE Genre IN ('$genres')
-                    AND Language.Language = '$language'
-                    AND Film.Title LIKE '%$title%'
-                    AND Studio.Studio LIKE '%$studio%'";
+                    WHERE Genre IN (:genres)
+                    AND Language.Language = :language
+                    AND Film.Title LIKE :title
+                    AND Studio.Studio LIKE :studio";
+                $execute = [$genres, $language, $title, $studio];
                 break;
 
             case !empty($title) && !empty($genres) && !empty($studio) && !empty($publicationYear):
@@ -113,10 +125,11 @@ class Movie extends Dbh {
                         ON Film.StudioID = Studio.StudioID
                     INNER JOIN Language
 						ON Film.LanguageID = Language.LanguageID
-                    WHERE Genre IN ('$genres')
-                    AND Film.Title LIKE '%$title%'
-                    AND Studio.Studio LIKE '%$studio%'
-                    AND YEAR(Film.ReleaseDate) = $publicationYear";
+                    WHERE Genre IN (:genres)
+                    AND Film.Title LIKE :title
+                    AND Studio.Studio LIKE :studio
+                    AND YEAR(Film.ReleaseDate) = :publicationYear";
+                $execute = [$genres, $title, $studio, $publicationYear];
                 break;
 
             case !empty($title) && !empty($genres) && !empty($studio):
@@ -125,9 +138,10 @@ class Movie extends Dbh {
                         ON Genre.GenreID = Film.GenreID
                     INNER JOIN Studio
                         ON Film.StudioID = Studio.StudioID
-                    WHERE Genre IN ('$genres')
-                    AND Film.Title LIKE '%$title%'
-                    AND Studio.Studio LIKE '%$studio%'";
+                    WHERE Genre IN (:genres)
+                    AND Film.Title LIKE :title
+                    AND Studio.Studio LIKE :studio";
+                $execute = [$genres, $title, $studio];
                 break;
 
             case !empty($title) && !empty($genres):
@@ -136,8 +150,9 @@ class Movie extends Dbh {
                         ON Genre.GenreID = Film.GenreID
                     INNER JOIN Studio
                         ON Film.StudioID = Studio.StudioID
-                    WHERE Genre IN ('$genres')
-                    AND Film.Title LIKE '%$title%'";
+                    WHERE Genre IN (:genres)
+                    AND Film.Title LIKE :title";
+                $execute = [$genres, $title];
                 break;
 
             case !empty($genres) && !empty($studio):
@@ -146,8 +161,9 @@ class Movie extends Dbh {
                         ON Genre.GenreID = Film.GenreID
                     INNER JOIN Studio
                         ON Film.StudioID = Studio.StudioID
-                    WHERE Genre IN ('$genres')
-                    AND Studio.Studio = '$studio'";
+                    WHERE Genre IN (:genres)
+                    AND Studio.Studio LIKE :studio'";
+                $execute = [$genres, $studio];
                 break;
 
             case !empty($title) && !empty($publicationYear):
@@ -156,8 +172,10 @@ class Movie extends Dbh {
                         ON Genre.GenreID = Film.GenreID
                     INNER JOIN Studio
                         ON Film.StudioID = Studio.StudioID
-                    WHERE YEAR(Film.ReleaseDate) = $publicationYear
-                    AND Film.Title LIKE '%$title%'";
+                    WHERE YEAR(Film.ReleaseDate) = :publicationYear
+                    AND Film.Title LIKE :title";
+                    exit();
+                $execute = [$title, $publicationYear];
                 break;
 
             case !empty($genres):
@@ -166,7 +184,8 @@ class Movie extends Dbh {
                         ON Genre.GenreID = Film.GenreID
                     INNER JOIN Studio
                         ON Film.StudioID = Studio.StudioID
-                    WHERE Genre IN ('$genres')";
+                    WHERE Genre IN (:genres)";
+                $execute = [$genres];
                 break;
 
             case !empty($title):
@@ -175,7 +194,8 @@ class Movie extends Dbh {
                         ON Genre.GenreID = Film.GenreID
                     INNER JOIN Studio
                         ON Film.StudioID = Studio.StudioID
-                    WHERE Film.Title LIKE '%$title%'";
+                    WHERE Film.Title LIKE :title";
+                $execute = [$title];
                 break;
 
             case !empty($studio):
@@ -184,7 +204,8 @@ class Movie extends Dbh {
                         ON Genre.GenreID = Film.GenreID
                     INNER JOIN Studio
                         ON Film.StudioID = Studio.StudioID
-                    WHERE Studio.Studio LIKE '%$studio%'";
+                    WHERE Studio.Studio LIKE :studio";
+                $execute = [$studio];
                 break;
 
             case !empty($publicationYear):
@@ -193,7 +214,8 @@ class Movie extends Dbh {
                         ON Genre.GenreID = Film.GenreID
                     INNER JOIN Studio
                         ON Film.StudioID = Studio.StudioID
-                    WHERE YEAR(Film.ReleaseDate) = $publicationYear";
+                    WHERE YEAR(Film.ReleaseDate) = :publicationYear";
+                $execute = [$publicationYear];
                 break;
 
             case !empty($language):
@@ -204,7 +226,8 @@ class Movie extends Dbh {
                         ON Film.StudioID = Studio.StudioID
                     INNER JOIN Language
 						ON Film.LanguageID = Language.LanguageID
-                    WHERE  Language.Language = '$language'";
+                    WHERE  Language.Language = :language";
+                $execute = [$language];
                 break;
             default:
                 $query = "SELECT Film.FilmID, Film.Img, Film.Title, Film.ReleaseDate, Genre.Genre, Studio.Studio FROM Film
@@ -212,22 +235,35 @@ class Movie extends Dbh {
                     ON Genre.GenreID = Film.GenreID
                 INNER JOIN Studio
 	                ON Film.StudioID = Studio.StudioID";
+                $execute = [];
                 break;
         }
 
-        return $query;
+        return [$query, $execute];
+    }
+
+    private function isFilterValueEmpty($value) {
+        if(empty($value)) {
+            $value = "$value";
+        }else{
+            $value = "%$value%";
+        }
+
+        return $value;
     }
 
     protected function get5TopRatedGenre($genre) {
+        $genre = "$genre";
         $query = "SELECT TOP 5 Film.FilmID, Film.Title, Film.ReleaseDate, Film.Img, Genre.Genre, Studio.Studio FROM Film
                 INNER JOIN Genre
                     ON Genre.GenreID = Film.GenreID
                 INNER JOIN Studio
 	                ON Film.StudioID = Studio.StudioID
-                WHERE Genre.Genre = '$genre'
+                WHERE Genre.Genre = :genre
                 AND Film.Review IS NOT NULL";
 
-        $connection = $this->connect()->query($query);
+        $connection = $this->connect()->prepare($query);
+        $connection->execute([$genre]);
 
         $results = $connection->fetchAll();
 
@@ -248,9 +284,10 @@ class Movie extends Dbh {
                     ON Certificate.CertificateID = Film.CertificateID
                 INNER JOIN Director
                     ON Director.DirectorID = Film.DirectorID
-                WHERE Film.FilmID = $id";
+                WHERE Film.FilmID = :id";
 
-        $connection = $this->connect()->query($query);
+        $connection = $this->connect()->prepare($query);
+        $connection->execute([$id]);
 
         if($connection->rowCount() == 0) {
             header("location: 404.php");
@@ -268,9 +305,10 @@ class Movie extends Dbh {
                     ON Role.FilmID = Film.FilmID
                 INNER JOIN Actor
                     ON Role.ActorID = Actor.ActorID
-                WHERE Film.FilmID = $id";
+                WHERE Film.FilmID = :id";
 
-        $connection = $this->connect()->query($query);
+        $connection = $this->connect()->prepare($query);
+        $connection->execute([$id]);
 
         $results = $connection->fetchAll();
 
@@ -278,12 +316,14 @@ class Movie extends Dbh {
     }
 
     protected function getRecomendations($id, $genre) {
+        $genre = "$genre";
         $query = "SELECT TOP 10 Film.FilmID, Film.Title, Film.Img FROM Film
                 INNER JOIN Genre
                     ON Genre.GenreID = Film.GenreID
-                WHERE Film.FilmID <> $id and Genre.Genre = '$genre'";
+                WHERE Film.FilmID <> :id and Genre.Genre = :genre";
 
-        $connection = $this->connect()->query($query);
+        $connection = $this->connect()->prepare($query);
+        $connection->execute([$id, $genre]);
 
         $results = $connection->fetchAll();
 

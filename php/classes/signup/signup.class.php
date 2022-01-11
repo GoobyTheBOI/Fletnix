@@ -7,11 +7,6 @@ class SignUp extends Dbh {
         $hash_password = password_hash($password, PASSWORD_DEFAULT);
         $connection->execute([$username, $firstname, $lastname, $email, $birth_date, $country, $gender, $subscription, $accountnmbr, $hash_password]);
 
-        if (!$connection->execute([$username, $firstname, $lastname, $email, $birth_date, $country, $gender, $subscription, $accountnmbr, $hash_password])) {
-            $connection = null;
-            header("location: ../../../register.php?error=connectionfailed");
-            exit();
-        }
 
         $connection = null;
     }
@@ -19,12 +14,6 @@ class SignUp extends Dbh {
     protected function checkUser($username, $email) {
         $connection = $this->connect()->prepare("SELECT COUNT(*) FROM Users WHERE username = :username OR email = :email;");
         $connection->execute([$username, $email]);
-
-        if (!$connection->execute([$username, $email])) {
-            $connection = null;
-            header("location: ../../../register.php?error=userexist");
-            exit();
-        }
 
         $connectionResult;
         if ($connection->fetchColumn() > 0) {

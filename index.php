@@ -1,5 +1,4 @@
 <?php
-    require_once("./htmlgenerator.php");
     require_once("php\classes\movies\movie.view.php");
     include_once('php\includes\session_start.inc.php');
 
